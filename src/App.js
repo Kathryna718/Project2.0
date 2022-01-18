@@ -1,65 +1,54 @@
-import Recipe from './components/Recipe.js';
+import Rating from '@mui/material/Rating';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 
-import './App.css';
-
-// React components are JS functions that return HTML / other components
+// to create a React component, use a JS function that returns some HTML / other components
 // React component names should be capitalized
-function App() {
-  // JS object is a collection of related variables
-  const recipes = [
-{
-    title: 'Ramen',
-    prep_time: '20 min',
-    ingredients: [
-  'some ramen noodles',
-  '1 cup of water',
-  'seasoning',
-  '2 eggs'
-    ]
-},
-{
-    title: 'Curry Mutton',
-    prep_time: '40 min',
-    ingredients:  [
-  'scallions',
-  'curry powder',
-  'salt',
-  'hot pepper'
-    ]
-},
-{
-    title: 'Hamburger',
-    prep_time: '15 min',
-    ingredients: [
-  'burger patty',
-  'bun',
-  'ketchup',
-  'mayo',
-    ]
-}
-  ];
-  
-  // note: for React, the class attribute must be named className instead
-  return (
-<div className='recipe-parent'>
-    {/* to access a part of a JS object, use the dot operator.
-    for example: object_name.subpart_name */}
-    {/* to pass JS variables to components, include them as an attribute.
-  for example: attribute_name={variable_name}
-      */}
-    {
-  recipes.map((recipe) => {
-      return <Recipe ingredients={recipe.ingredients} title={recipe.title} prep_time={recipe.prep_time} />;
-  })
-    }
-</div>
-  );
+function Recipe({
+    // to get access to attributes, put {attribute_name} in the arguments of the function
+    ingredients,
+    title,
+    prep_time,
+    alt_text,
+    image
+}){
+    
+    /*
+       <li>ingredient 1</li>
+       <li>ingredient 2</li>
+     */
+    
+    return (
+	<Card>
+	    <CardMedia
+		component='img'
+		height='140'
+		image={image}
+		alt={alt_text}
+	    />
+	    <CardContent>
+		<h2>
+		    {title}
+		</h2>
+		<p>
+		    {prep_time}
+		</p>
+		<ol>
+		    {ingredients.map(
+			// .map is a built in function of arrays that allows you to process them one at a time.
+			// remember when using .map that you need to provide a *unique* key attribute for each item
+			(ingredient) => {
+			    return <li key={ingredient}>{ingredient}</li>;
+			}
+		    )}
+		</ol>
+		<Rating name="no-value" value={null} />
+	    </CardContent>
+	</Card>
+    );
 }
 
-// this allows other components / files to use this component
-  
-  
-export default App;
 
-
-
+// this lets other components / JS files use this file
+export default Recipe;
